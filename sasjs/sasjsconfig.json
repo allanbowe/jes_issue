@@ -1,0 +1,34 @@
+{
+  "$schema": "https://raw.githubusercontent.com/sasjs/utils/main/src/types/sasjsconfig-schema.json",
+  "macroFolders": [
+    "macros"
+  ],
+  "jobConfig": {
+    "jobFolders": [
+      "jobs/demo"
+    ]
+  },
+  "defaultTarget": "viya",
+  "targets": [
+    {
+      "name": "viya",
+      "serverUrl": "https://viya-f0g8ht62vq.engage.sas.com",
+      "serverType": "SASVIYA",
+      "httpsAgentOptions": {
+        "allowInsecureRequests": false
+      },
+      "appLoc": "/Public/jes_demo",
+      "deployConfig": {
+        "deployServicePack": true,
+        "deployScripts": []
+      },
+      "contextName": "SAS Job Execution compute context"
+    },
+    {
+      "name": "server",
+      "serverUrl": "",
+      "serverType": "SASJS",
+      "appLoc": "/Public/demo/server"
+    }
+  ]
+}

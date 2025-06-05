@@ -1,0 +1,33 @@
+{
+  "name": "template_jobs",
+  "version": "1.0.0",
+  "description": "The jobs template used by SASjs when running sasjs create",
+  "homepage": "https://cli.sasjs.io",
+  "main": "index.js",
+  "scripts": {
+    "add": "sasjs auth -t viya",
+    "deploy": "sasjs cbd -t viya",
+    "exec": "sasjs job execute jobs/extract/makedata1 -l sasjsbuild/makedata1.log -t viya",
+    "flow": "sasjs flow execute -s sasjs/jobflow.json -l sasjsbuild --csvFile sasjsbuild/results.csv -t viya",
+    "delete": "sasjs folder delete /Public/sasjs/jobs -t viya",
+    "docs": "sasjs doc",
+    "test": "sasjs test",
+    "lint": "sasjs lint",
+    "prepare": "chmod 0755 .git-hooks/* && git rev-parse --git-dir && git config core.hooksPath ./.git-hooks || true"
+  },
+  "keywords": [
+    "SAS",
+    "Viya",
+    "SASjs"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/sasjs/template_jobs"
+  },
+  "author": "support@sasjs.io",
+  "license": "ISC",
+  "dependencies": {
+    "@sasjs/cli": "^4.12.7",
+    "@sasjs/core": "^4.58.2"
+  }
+}
