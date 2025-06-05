@@ -39,18 +39,17 @@ parmcards4;
             "required": false
         }
     ],
-    "code": "filename _webout filesrvc parenturi=\"&SYS_JES_JOB_URI\" name=\"_webout.json\";data _null_;file _webout;put '{\"name\" : \"value\")';run;"
+    "code": "filename _webout filesrvc parenturi=\"&SYS_JES_JOB_URI\" name=\"_webout.json\";data;file _webout;put 'gm';run;"
   },
   "arguments": {
-    "_contextName": "SAS Job Execution Compute context",
+    "_contextName": "SAS Job Execution compute context",
     "_program": "$APPLOC",
     "_webin_file_count": 0,
     "_OMITJSONLISTING": false,
     "_OMITJSONLOG": false,
     "_OMITSESSIONRESULTS": false,
     "_OMITTEXTLISTING": false,
-    "_OMITTEXTLOG": false,
-    "_debug": 2477
+    "_OMITTEXTLOG": false
   }
 }
 ;;;;
@@ -101,7 +100,9 @@ data _null_;
 run;
 
 /* give the job a chance to finish */
-%let rc=%sysfunc(sleep(5,1));
+%put going to sleep at: %sysfunc(datetime(),datetime19.);
+%let rc=%sysfunc(sleep(10,1));
+%put waking up at: %sysfunc(datetime(),datetime19.);
 
 /* GET the results */
 filename f2 temp;
@@ -115,9 +116,16 @@ data _null_;
   input; putlog _infile_;
 run;
 libname json2 JSON fileref=f2;
+proc datasets lib=json2 details;
+quit;
 data results;
   set json2.results;
   putlog (_all_)(=);
 run;
 
+/**
+  if you open the log from the above results, you can extract the
+  _webout that WAS executed, and it DOES persist
+  It's just not returned with the job results!!!
+**/
 

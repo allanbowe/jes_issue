@@ -16,6 +16,9 @@
         "deployServicePack": true,
         "deployScripts": []
       },
+      "buildConfig": {
+        "termProgram": "sasjs/buildterm.sas"
+      },
       "contextName": "SAS Job Execution compute context"
     }
   ]

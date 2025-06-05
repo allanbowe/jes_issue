@@ -2624,18 +2624,17 @@ file sascode;
  put '"required": false';
  put '}';
  put '],';
- put '"code": "filename _webout filesrvc parenturi=\"&SYS_JES_JOB_URI\" name=\"_webout.json\";data _null_;file _webout;put ''{\"name\" : \"value\")'';run;"';
+ put '"code": "filename _webout filesrvc parenturi=\"&SYS_JES_JOB_URI\" name=\"_webout.json\";data;file _webout;put ''gm'';run;"';
  put '},';
  put '"arguments": {';
- put '"_contextName": "SAS Job Execution Compute context",';
+ put '"_contextName": "SAS Job Execution compute context",';
  put '"_program": "$APPLOC",';
  put '"_webin_file_count": 0,';
  put '"_OMITJSONLISTING": false,';
  put '"_OMITJSONLOG": false,';
  put '"_OMITSESSIONRESULTS": false,';
  put '"_OMITTEXTLISTING": false,';
- put '"_OMITTEXTLOG": false,';
- put '"_debug": 2477';
+ put '"_OMITTEXTLOG": false';
  put '}';
  put '}';
  put ';;;;';
@@ -2679,7 +2678,9 @@ file sascode;
  put 'end;';
  put 'run;';
  put '/* give the job a chance to finish */';
- put '%let rc=%sysfunc(sleep(5,1));';
+ put '%put going to sleep at: %sysfunc(datetime(),datetime19.);';
+ put '%let rc=%sysfunc(sleep(10,1));';
+ put '%put waking up at: %sysfunc(datetime(),datetime19.);';
  put '/* GET the results */';
  put 'filename f2 temp;';
  put 'proc http method=''GET'' in=body out=f2 oauth_bearer=sas_services';
@@ -2692,10 +2693,17 @@ file sascode;
  put 'input; putlog _infile_;';
  put 'run;';
  put 'libname json2 JSON fileref=f2;';
+ put 'proc datasets lib=json2 details;';
+ put 'quit;';
  put 'data results;';
  put 'set json2.results;';
  put 'putlog (_all_)(=);';
  put 'run;';
+ put '/**';
+ put 'if you open the log from the above results, you can extract the';
+ put '_webout that WAS executed, and it DOES persist';
+ put 'It''s just not returned with the job results!!!';
+ put '**/';
  put '* Test end;';
 
 run;
@@ -2703,3 +2711,14 @@ run;
 filename sascode clear;
 
 
+
+* BuildTerm start;
+/**
+  @file
+  @brief <Your brief here>
+  <h4> SAS Macros </h4>
+**/
+%put;%put;
+%put Open the above url in a browser with %str(&)_DEBUG=2477 at the end;
+%put;%put;%put;
+* BuildTerm end;

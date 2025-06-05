@@ -12,3 +12,5 @@ filename demo url
  "https://raw.githubusercontent.com/allanbowe/jes_issue/refs/heads/main/viya.sas";
 %inc demo;
 ```
+
+You can now open the last line of the log in a browser, and add "&_debug=2477" to get the log
