@@ -42,14 +42,15 @@ parmcards4;
     "code": "filename _webout filesrvc parenturi=\"&SYS_JES_JOB_URI\" name=\"_webout.json\";data _null_;file _webout;put '{\"name\" : \"value\")';run;"
   },
   "arguments": {
-    "_contextName": "SharedCompute",
+    "_contextName": "SAS Job Execution Compute context",
     "_program": "$APPLOC",
     "_webin_file_count": 0,
     "_OMITJSONLISTING": false,
     "_OMITJSONLOG": false,
     "_OMITSESSIONRESULTS": false,
     "_OMITTEXTLISTING": false,
-    "_OMITTEXTLOG": false
+    "_OMITTEXTLOG": false,
+    "_debug": 2477
   }
 }
 ;;;;
@@ -113,8 +114,10 @@ data _null_;
   infile f2;
   input; putlog _infile_;
 run;
-libname json2 JSON fileref=f1;
-data _null_;
+libname json2 JSON fileref=f2;
+data results;
   set json2.results;
   putlog (_all_)(=);
 run;
+
+
