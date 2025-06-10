@@ -14,3 +14,5 @@ filename demo url
 ```
 
 You can now open the last line of the log in a browser, and add "&_debug=2477" to get the log
+
+EDIT:  The issue was solved, it seems that (presumably from Feruary to June 2025) the _omitSessionResults variable was case sensitive.
